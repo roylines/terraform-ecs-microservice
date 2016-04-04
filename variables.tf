@@ -31,7 +31,7 @@ variable "port" {
 }
 
 variable "desired_count" {
-  description = "the zone_id to use"
+  description = "the number of microservices to provision"
 }
 
 variable "internal" {
