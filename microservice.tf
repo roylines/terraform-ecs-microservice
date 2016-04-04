@@ -72,6 +72,7 @@ resource "aws_elb" "microservice" {
     lb_protocol = "http"
   }
 
+  internal = "${var.internal}"
   cross_zone_load_balancing = true
   connection_draining = true
   connection_draining_timeout = 400
@@ -123,8 +124,7 @@ resource "aws_ecs_service" "microservice" {
   }
 }
 
-/*
-resource "aws_route53_record" "microservices" {
+resource "aws_route53_record" "microservice" {
   zone_id = "${var.private_zone_id}"
   name = "${var.name}" 
   type = "A"
@@ -132,7 +132,6 @@ resource "aws_route53_record" "microservices" {
   alias {
     name = "${aws_elb.microservice.dns_name}"
     zone_id = "${aws_elb.microservice.zone_id}"
-    evaluate_target_health = "true"
+    evaluate_target_health = "false" /* not allowed in private zones */
   }
 }
-*/

@@ -34,3 +34,7 @@ variable "desired_count" {
   description = "the zone_id to use"
 }
 
+variable "internal" {
+  description = "is the microservice internal only"
+  default = true
+}
