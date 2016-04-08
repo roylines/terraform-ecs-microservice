@@ -98,12 +98,14 @@ resource "aws_ecs_task_definition" "microservice" {
     "image": "${var.image}",
     "cpu": 10,
     "memory": 50,
-    "portMappings": [
-      {
-        "containerPort": 80,
-        "hostPort": ${var.port} 
-      }
-    ]
+    "portMappings": [{
+      "containerPort": 80,
+      "hostPort": ${var.port} 
+    }],
+    "environment": [{
+      "name" : "LOG_GROUP_NAME",
+      "value" : "${aws_cloudwatch_log_group.microservice.name}"
+    }]
   }
 ]
 EOF
