@@ -6,6 +6,10 @@ variable "vpc_id" {
   description = "the vpc id"
 }
 
+variable "region" {
+  description = "the region"
+}
+
 variable "subnets" {
   description = "the subnets"
 }
