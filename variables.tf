@@ -22,6 +22,11 @@ variable "name" {
   description = "the microservice name"
 }
 
+variable "version" {
+  description = "the microservice version"
+  default = "v1"
+}
+
 variable "image" {
   description = "the docker container image to use"
 }
@@ -38,3 +43,4 @@ variable "internal" {
   description = "is the microservice internal only"
   default = true
 }
+
