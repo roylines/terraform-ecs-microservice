@@ -48,3 +48,6 @@ variable "internal" {
   default = true
 }
 
+variable "acm_certificate_arn" {
+  description = "the ARN of the aws certificate manager certificate to use"
+}

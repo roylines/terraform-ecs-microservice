@@ -3,8 +3,8 @@ resource "aws_security_group" "microservice_elb" {
   description = "security group used by elb for api gateway"
   vpc_id = "${var.vpc_id}" 
   ingress {
-      from_port = 80 
-      to_port = 80
+      from_port = 443 
+      to_port = 443
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
   }
@@ -27,8 +27,9 @@ resource "aws_elb" "microservice" {
   listener {
     instance_port = "${var.port}" 
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port = 443
+    lb_protocol = "https"
+    ssl_certificate_id = "${var.acm_certificate_arn}"
   }
 
   internal = "${var.internal}"
