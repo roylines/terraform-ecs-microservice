@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "microservice" {
     "cpu": ${var.cpu},
     "memory": ${var.memory},
     "portMappings": [{
-      "containerPort": 80,
+      "containerPort": ${var.container_port},
       "hostPort": ${var.port} 
     }],
     "environment": [{
@@ -31,6 +31,6 @@ resource "aws_ecs_service" "microservice" {
   load_balancer {
     elb_name = "${aws_elb.microservice.id}"
     container_name = "${var.vpc}-${var.name}-${var.version}"
-    container_port = 80
+    container_port = "${var.container_port}"
   }
 }

@@ -35,6 +35,11 @@ variable "image" {
   description = "the docker container image to use"
 }
 
+variable "container_port" {
+  description = "the container port"
+  default = 8080
+}
+
 variable "port" {
   description = "the microservice port"
 }
