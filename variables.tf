@@ -39,6 +39,16 @@ variable "port" {
   description = "the microservice port"
 }
 
+variable "cpu" {
+  description = "the number of cpu units to reserve"
+  default = 10 
+}
+
+variable "memory" {
+  description = "the number of MiB of memory to reserve"
+  default = 50 
+}
+
 variable "desired_count" {
   description = "the number of microservices to provision"
 }

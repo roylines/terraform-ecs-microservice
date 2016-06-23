@@ -5,8 +5,8 @@ resource "aws_ecs_task_definition" "microservice" {
   {
     "name": "${var.vpc}-${var.name}-${var.version}",
     "image": "${var.image}",
-    "cpu": 10,
-    "memory": 50,
+    "cpu": ${var.cpu},
+    "memory": ${var.memory},
     "portMappings": [{
       "containerPort": 80,
       "hostPort": ${var.port} 
