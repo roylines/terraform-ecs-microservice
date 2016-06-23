@@ -1,3 +1,4 @@
+/*
 resource "aws_security_group" "microservice_elb" {
   name = "${var.vpc}-${var.name}-${var.version}-elb"
   description = "security group used by elb for api gateway"
@@ -18,11 +19,13 @@ resource "aws_security_group" "microservice_elb" {
     Name = "${var.vpc}-${var.name}-${var.version}-elb"
   }
 }
+*/
 
 resource "aws_elb" "microservice" {
   name = "${var.vpc}-${var.name}-${var.version}"
   subnets = ["${split(",", var.subnets)}"]
-  security_groups = ["${aws_security_group.microservice_elb.id}"]
+  //security_groups = ["${aws_security_group.microservice_elb.id}"]
+  security_groups = ["${var.microservice_elb_security_group_id}"]
 
   listener {
     instance_port = "${var.port}" 

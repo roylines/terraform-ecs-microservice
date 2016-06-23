@@ -22,6 +22,10 @@ variable "cluster_id" {
   description = "the cluster_id"
 }
 
+variable "microservice_elb_security_group_id" {
+  description = "the elb security group to use id"
+}
+
 variable "name" {
   description = "the microservice name"
 }
