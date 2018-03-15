@@ -1,0 +1,32 @@
+{
+  "variables": {
+    "login_server": "",
+    "repository": "",
+    "version": ""
+  },
+
+  "builders": [{
+    "type": "docker",
+    "image": "roylines/nginx",
+    "commit": true,
+    "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
+    "changes": [
+      "EXPOSE 80",
+      "CMD nginx -g daemon off;"
+    ]
+  }],
+
+  "provisioners": [],
+
+  "post-processors": [
+    [{
+      "type": "docker-tag",
+      "repository": "{{user `repository`}}",
+      "tag": "{{user `version`}}"
+    }, {
+      "type": "docker-push",
+      "ecr_login": true,
+      "login_server": "{{user `login_server`}}"
+    }]
+  ]
+}
