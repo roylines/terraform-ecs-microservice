@@ -53,6 +53,11 @@ variable "desired_count" {
   default = 1
 }
 
+variable "health_check_path" {
+  description = "the path for the health check"
+  default = "/"
+}
+
 variable "build_version" {
   description = "the build version, e.g. 0.0.1"
 }

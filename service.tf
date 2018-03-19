@@ -10,6 +10,13 @@ resource "aws_alb_target_group" "microservice" {
   port = 80 /* this is always overriden in ecs service */
   protocol = "HTTP"
   vpc_id = "${data.aws_vpc.main.id}"
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
+    path                = "${var.health_check_path}"
+  }
   depends_on = [
     "aws_alb.microservice"
   ]
@@ -50,6 +57,10 @@ resource "aws_ecs_service" "microservice" {
   desired_count = "${var.desired_count}"
   depends_on = ["aws_iam_role_policy.microservice"]
   iam_role = "${aws_iam_role.microservice.arn}"
+  placement_strategy {
+    type  = "spread"
+    field = "attribute:ecs.availability-zone"
+  }
   load_balancer {
     target_group_arn = "${aws_alb_target_group.microservice.arn}"
     container_name = "${local.microservice_fullname}"
