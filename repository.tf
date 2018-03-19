@@ -4,5 +4,6 @@ resource "aws_ecr_repository" "microservice" {
 
 resource "aws_ecr_lifecycle_policy" "microservice" {
   repository = "${aws_ecr_repository.microservice.name}"
-  policy = "${file("ecr-lifecycle-policy.json")}"
+  policy = "${file("repository.json")}"
 }
+

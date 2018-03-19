@@ -1,16 +1,21 @@
 variable "region" {
-  description = "the region"
+  description = "the region to host in"
   default = "us-east-1"
 }
 
 variable "environment" {
-  description = "the environment"
+  description = "the environment (dev, stag, prod)"
   default = "prod"
 }
 
 variable "name" {
-  description = "the name of this cluster"
+  description = "the namespace of this cluster"
   default = "ecs"
+}
+
+variable "internal" {
+  description = "should the microservice be internal"
+  default = false
 }
 
 variable "microservice_name" {
@@ -28,9 +33,28 @@ variable "packer_file" {
   default = "packer.json"
 }
 
+variable "cpu" {
+  description = "the number of cpu units to reserve"
+  default = 10 
+}
+
+variable "memory" {
+  description = "the number of MiB of memory to reserve"
+  default = 50 
+}
+
+variable "container_port" {
+  description = "the port the container listens on"
+  default = 8080 
+}
+
+variable "desired_count" {
+  description = "the number of containers to provision"
+  default = 1
+}
+
 variable "build_version" {
-  description = "the build version"
-  default = "0.0.1"
+  description = "the build version, e.g. 0.0.1"
 }
 
 locals {
@@ -89,16 +113,6 @@ variable "container_port" {
 
 variable "port" {
   description = "the microservice port"
-}
-
-variable "cpu" {
-  description = "the number of cpu units to reserve"
-  default = 10 
-}
-
-variable "memory" {
-  description = "the number of MiB of memory to reserve"
-  default = 50 
 }
 
 variable "desired_count" {
