@@ -41,7 +41,7 @@ data "template_file" "container_definitions" {
     cpu = "${var.cpu}",
     memory = "${var.memory}",
     containerPort = "${var.container_port}",
-    hostPort = 0
+    hostPort = 0 /* ephemeral */
   }
 }
 
@@ -56,11 +56,17 @@ resource "aws_ecs_service" "microservice" {
   task_definition = "${aws_ecs_task_definition.microservice.arn}"
   desired_count = "${var.desired_count}"
   depends_on = ["aws_iam_role_policy.microservice"]
-  iam_role = "${aws_iam_role.microservice.arn}"
+
+  /* placement strategy of first spreading across availability zones, and then by instances within availability zones */
   placement_strategy {
     type  = "spread"
     field = "attribute:ecs.availability-zone"
   }
+  placement_strategy {
+    type  = "spread"
+    field = "instanceId"
+  }
+  iam_role = "${aws_iam_role.microservice.arn}"
   load_balancer {
     target_group_arn = "${aws_alb_target_group.microservice.arn}"
     container_name = "${local.microservice_fullname}"

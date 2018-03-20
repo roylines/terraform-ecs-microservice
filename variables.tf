@@ -50,7 +50,7 @@ variable "container_port" {
 
 variable "desired_count" {
   description = "the number of containers to provision"
-  default = 1
+  default = 2
 }
 
 variable "health_check_path" {
