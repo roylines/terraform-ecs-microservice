@@ -1,21 +1,16 @@
 variable "region" {
-  description = "the region to host in"
+  description = "the region"
   default = "us-east-1"
 }
 
 variable "environment" {
-  description = "the environment (dev, stag, prod)"
+  description = "the environment"
   default = "prod"
 }
 
 variable "name" {
-  description = "the namespace of this cluster"
+  description = "the name of this cluster"
   default = "ecs"
-}
-
-variable "internal" {
-  description = "should the microservice be internal"
-  default = false
 }
 
 variable "microservice_name" {
@@ -28,9 +23,9 @@ variable "microservice_version" {
   default = "v1"
 }
 
-variable "packer_file" {
-  description = "packer json file"
-  default = "packer.json"
+variable "internal" {
+  description = "should the microservice be internal"
+  default = false
 }
 
 variable "cpu" {
@@ -55,25 +50,25 @@ variable "desired_count" {
 
 variable "health_check_path" {
   description = "the path for the health check"
-  default = "/"
+  default = "/health"
+}
+
+variable "packer_file" {
+  description = "packer json file"
+  default = "packer.json"
 }
 
 variable "build_version" {
-  description = "the build version, e.g. 0.0.1"
+  description = "the build version, e.g. 0.0.1. This is usually set by your CI platform"
+}
+
+variable "working_dir" {
+  description = "the directory in which to run packer commands"
 }
 
 locals {
   namespace = "${var.environment}-${var.name}"
-  microservice_fullname = "${var.environment}-${var.name}-${var.microservice_name}-${var.microservice_version}"
+  microservice_fullname = "${local.namespace}-${var.microservice_name}-${var.microservice_version}"
   repository_server = "${replace(aws_ecr_repository.microservice.repository_url, "/${local.microservice_fullname}","")}"
 }
 
-/*
-variable "private_zone_id" {
-  description = "the r53 private zone id"
-}
-
-variable "acm_certificate_arn" {
-  description = "the ARN of the aws certificate manager certificate to use"
-}
-*/

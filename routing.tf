@@ -1,10 +1,5 @@
-data "aws_route53_zone" "microservice" {
-	name = "${var.name}.${var.environment}."
-  private_zone = true
-}
-
 resource "aws_route53_record" "microservice" {
-  zone_id = "${data.aws_route53_zone.microservice.zone_id}"
+  zone_id = "${data.aws_route53_zone.main.zone_id}"
 	name = "${var.microservice_version}.${var.microservice_name}"
   type = "A"
   alias {

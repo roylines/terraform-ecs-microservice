@@ -12,3 +12,7 @@ data "aws_ecs_cluster" "main" {
   cluster_name = "${local.namespace}"
 }
 
+data "aws_route53_zone" "main" {
+  name = "${var.name}.${var.environment}."
+  private_zone = true
+}
